@@ -1,4 +1,4 @@
-# React Flask Boilerplate
+# React Flask Heroku Boilerplate
 
 This is a boilerplate starter for a react frontend with a flask backend, designed to be deployed to Heroku. It is based on [this amazing tutorial](https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project#commentform)
 
