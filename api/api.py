@@ -1,7 +1,7 @@
 import time
 from flask import Flask
 from glean import Glean, load_metrics
-metrics = load_metrics("metrics.yaml")
+metrics = load_metrics("./metrics.yaml")
 
 #allow telemetry to be disabled
 telemetry_enabled = False
@@ -10,7 +10,7 @@ Glean.initialize(
   application_id="react-flask-heroku-bp",
   application_version="0.1.0",
   upload_enabled=telemetry_enabled,
-  data_dir=""
+  data_dir="" #MH: not sure what to put here
 )
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
