@@ -1,10 +1,18 @@
-import time
+import time, os
 from flask import Flask, url_for
 from glean import Glean, load_metrics
+from dotenv import load_dotenv
+
+APP_ROOT = os.path.join(os.path.dirname(__file__), '..')   # refers to application_top
+dotenv_path = os.path.join(APP_ROOT, '.env')
+load_dotenv(dotenv_path)
+metrics_path = os.getenv('METRICS_PATH')
 
 #allow telemetry to be disabled
 telemetry_enabled = False
-#will hold the glean metrics
+
+metrics_file = os.path.join(APP_ROOT, metrics_path)
+#will hold the glean metrics:
 metrics = None
 
 Glean.initialize(
@@ -22,7 +30,7 @@ def index():
 
 @app.route('/api/init_metrics')
 def init_metrics():
-  metrics = load_metrics('metrics.yaml')
+  metrics = load_metrics(metrics_file)
   #metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
   #metrics.app.loads.add()  # Increment the app loads counter in glean
   return {'metricsLoaded': True}
