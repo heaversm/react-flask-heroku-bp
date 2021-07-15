@@ -4,6 +4,8 @@ from glean import Glean, load_metrics
 
 #allow telemetry to be disabled
 telemetry_enabled = False
+#will hold the glean metrics
+metrics = None
 
 Glean.initialize(
   application_id="react-flask-heroku-bp",
@@ -13,13 +15,11 @@ Glean.initialize(
 )
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
-#metrics = load_metrics("metrics.yaml") #works in local but not build environment
-
 
 @app.route('/')
 def index():
-  metrics = load_metrics(url_for('static', filename='metrics.yaml'))
-  metrics.app.loads.add()  # Increment the app loads counter in glean
+  #metrics = load_metrics(url_for('static', filename='metrics.yaml'))
+  #metrics.app.loads.add()  # Increment the app loads counter in glean
   return app.send_static_file('index.html')
 
 @app.route('/api/time')
