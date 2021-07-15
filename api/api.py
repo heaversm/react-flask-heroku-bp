@@ -31,7 +31,7 @@ def index():
 
 @app.route('/api/init_metrics')
 def init_metrics():
-  metrics = load_metrics(metrics_file)
+  #metrics = load_metrics(metrics_file)
   #metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
   #metrics.app.loads.add()  # Increment the app loads counter in glean
   return {'metricsLoaded': True}
