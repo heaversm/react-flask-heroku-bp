@@ -11,7 +11,8 @@ metrics_path = os.getenv('METRICS_PATH')
 #allow telemetry to be disabled
 telemetry_enabled = False
 
-metrics_file = os.path.join(APP_ROOT, metrics_path)
+#metrics_file = os.path.join(APP_ROOT, metrics_path)
+metrics_file = metrics_path
 #will hold the glean metrics:
 metrics = None
 
