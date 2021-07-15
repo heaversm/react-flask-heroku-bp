@@ -14,11 +14,11 @@ Glean.initialize(
   data_dir="" #MH: not sure what to put here
 )
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__, static_folder='../build', static_url_path='')
 
 @app.route('/')
 def index():
-  metrics = load_metrics(url_for('static', filename='/metrics.yaml')) #MH: currently breaks Heroku - file not found
+  metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
   #metrics.app.loads.add()  # Increment the app loads counter in glean
   return app.send_static_file('index.html')
 
