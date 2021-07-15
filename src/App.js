@@ -11,10 +11,18 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setCurrentTime(data.time);
+        initMetrics();
       });
-
-    toggleTelemetry();
   }, []);
+
+  async function initMetrics() {
+    fetch("/api/init_metrics")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toggleTelemetry();
+      });
+  }
 
   const toggleTelemetry = (e, isEnabled = !telemetryEnabled) => {
     fetch(`/api/toggle_telemetry/${isEnabled}`)

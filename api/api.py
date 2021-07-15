@@ -18,9 +18,14 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/')
 def index():
-  metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
-  #metrics.app.loads.add()  # Increment the app loads counter in glean
   return app.send_static_file('index.html')
+
+@app.route('/api/init_metrics')
+def init_metrics():
+  metrics = load_metrics('metrics.yaml')
+  #metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
+  #metrics.app.loads.add()  # Increment the app loads counter in glean
+  return {'metricsLoaded': True}
 
 @app.route('/api/time')
 def get_current_time():
@@ -41,5 +46,5 @@ def toggle_telemetry(is_enabled):
   return {'telemetryEnabled': telemetry_enabled}
 
 
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
+#if __name__ == '__main__':
+  #app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
