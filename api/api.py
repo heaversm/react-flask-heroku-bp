@@ -14,7 +14,7 @@ Glean.initialize(
   data_dir="" #MH: not sure what to put here
 )
 
-app = Flask(__name__, static_folder='../build', static_url_path='')
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/')
 def index():
@@ -39,3 +39,7 @@ def toggle_telemetry(is_enabled):
   else:
     Glean.set_upload_enabled(0)
   return {'telemetryEnabled': telemetry_enabled}
+
+
+if __name__ == '__main__':
+  app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
