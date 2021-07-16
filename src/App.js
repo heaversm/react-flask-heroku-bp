@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import gleanLogo from "./glean-logo.png";
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
   const [telemetryEnabled, setTelemetryEnabled] = useState(false);
 
   useEffect(() => {
-    fetch("/api/time")
-      .then((res) => res.json())
-      .then((data) => {
-        setCurrentTime(data.time);
-        initMetrics();
-      });
+    initMetrics();
   }, []);
 
   async function initMetrics() {
@@ -36,11 +30,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <a onClick={toggleTelemetry}>
-          <img src={logo} className="App-logo" alt="logo" />
-        </a>
-        <p>The current time is {currentTime}.</p>
-        {telemetryEnabled && <p>Telemetry enabled</p>}
+        <img src={gleanLogo} className="App-logo" alt="logo" />
+        <button className="App-button" onClick={toggleTelemetry}>
+          Toggle Telemetry
+        </button>
+        <p>Telemetry enabled: {telemetryEnabled ? "true" : "false"}</p>
       </header>
     </div>
   );

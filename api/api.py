@@ -1,19 +1,11 @@
-import time, os
 from pathlib import Path
 from flask import Flask, url_for
 from glean import Glean, load_metrics
-from dotenv import load_dotenv
 
-APP_ROOT = os.path.join(os.path.dirname(__file__), '..')   # refers to application_top
-dotenv_path = os.path.join(APP_ROOT, '.env')
-load_dotenv(dotenv_path)
-metrics_path = os.getenv('METRICS_PATH')
 
 #allow telemetry to be disabled
 telemetry_enabled = False
 
-#metrics_file = os.path.join(APP_ROOT, metrics_path)
-#metrics_file = metrics_path
 metrics_file = Path(__file__).parent / "metrics.yaml"
 #will hold the glean metrics:
 metrics = None
@@ -34,13 +26,9 @@ def index():
 @app.route('/api/init_metrics')
 def init_metrics():
   metrics = load_metrics(metrics_file)
-  #metrics = load_metrics(url_for('static', filename='metrics.yaml')) #MH: currently breaks Heroku - file not found
-  #metrics.app.loads.add()  # Increment the app loads counter in glean
+  metrics.app.loads.add()  # Increment the app loads counter in glean
   return {'metricsLoaded': True}
 
-@app.route('/api/time')
-def get_current_time():
-  return {'time': time.time()}
 
 @app.route('/api/toggle_telemetry/<is_enabled>')
 def toggle_telemetry(is_enabled):
@@ -55,7 +43,3 @@ def toggle_telemetry(is_enabled):
   else:
     Glean.set_upload_enabled(0)
   return {'telemetryEnabled': telemetry_enabled}
-
-
-#if __name__ == '__main__':
-  #app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
