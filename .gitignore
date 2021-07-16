@@ -28,3 +28,5 @@ venv
 l
 #python
 __pycache__
+api/db/*
+db/*
